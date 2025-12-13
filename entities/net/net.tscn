@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgtvfrdv16tkk"]
+
+[ext_resource type="Script" uid="uid://b3ocwlk5ghq7w" path="res://entities/net/net.gd" id="1_idgqa"]
+[ext_resource type="PackedScene" uid="uid://dnipadme163xe" path="res://entities/knot/knot.tscn" id="2_1bvu8"]
+
+[node name="Net" type="Node2D"]
+script = ExtResource("1_idgqa")
+knot_scene = ExtResource("2_1bvu8")
+
+[node name="Knots" type="Node2D" parent="."]
+unique_name_in_owner = true

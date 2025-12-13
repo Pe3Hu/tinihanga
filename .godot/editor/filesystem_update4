@@ -1,0 +1,12 @@
+res://entities/knot/knot.tscn
+res://entities/knot/knot.gd
+res://entities/net/note.tscn
+res://entities/net/note.gd
+res://entities/net/net_resource.gd
+res://entities/knot/knot_resource.gd
+res://global/Catalog.gd
+res://global/State.gd
+res://entities/net/net.tscn
+res://entities/net/net.gd
+res://entities/world/world.tscn
+res://entities/world/world.gd
