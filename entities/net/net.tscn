@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dnipadme163xe" path="res://entities/knot/knot.tscn" id="2_1bvu8"]
 
 [node name="Net" type="Node2D"]
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_idgqa")
 knot_scene = ExtResource("2_1bvu8")
 
