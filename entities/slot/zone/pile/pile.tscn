@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3 uid="uid://djj2tbo6fx0g4"]
+
+[ext_resource type="PackedScene" uid="uid://bi7ecitk5t7rc" path="res://entities/slot/zone/zone.tscn" id="1_bqtvb"]
+[ext_resource type="Script" uid="uid://g52ib5cneaxl" path="res://entities/slot/zone/pile/pile.gd" id="2_fe8y6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fe8y6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fe8y6"]
+size = Vector2(160, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_34416"]
+size = Vector2(50, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_txf6i"]
+size = Vector2(50, 32)
+
+[node name="Pile" instance=ExtResource("1_bqtvb")]
+custom_minimum_size = Vector2(320, 32)
+script = ExtResource("2_fe8y6")
+
+[node name="ZoneContainer" parent="." index="0"]
+custom_minimum_size = Vector2(320, 32)
+offset_right = 320.0
+
+[node name="ColorRect" type="ColorRect" parent="ZoneContainer" index="0"]
+layout_mode = 2
+mouse_filter = 1
+color = Color(0, 0.65551686, 0.6598048, 1)
+
+[node name="Label" type="Label" parent="ZoneContainer" index="1"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Name"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ZoneContainer" index="2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="LockCheckButton" type="CheckButton" parent="ZoneContainer/VBoxContainer" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fe8y6")
+text = "lock"
+
+[node name="CardsHolder" type="HBoxContainer" parent="ZoneContainer/VBoxContainer" index="1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="CardDropAreaRight" type="Area2D" parent="ZoneContainer" index="3"]
+unique_name_in_owner = true
+position = Vector2(160, 0)
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneContainer/CardDropAreaRight" index="0"]
+position = Vector2(80, 16)
+shape = SubResource("RectangleShape2D_fe8y6")
+
+[node name="CardDropAreaLeft" type="Area2D" parent="ZoneContainer" index="4"]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneContainer/CardDropAreaLeft" index="0"]
+position = Vector2(80, 16)
+shape = SubResource("RectangleShape2D_fe8y6")
+
+[node name="DropPointDetector" parent="." index="2"]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="DropPointDetector" index="0"]
+position = Vector2(160, 16)
+shape = SubResource("RectangleShape2D_34416")
+
+[node name="ZonesDetector" parent="." index="3"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="ZonesDetector" index="0"]
+position = Vector2(160, 16)
+shape = SubResource("RectangleShape2D_txf6i")
+
+[connection signal="pressed" from="ZoneContainer/VBoxContainer/LockCheckButton" to="." method="_on_lock_check_box_pressed"]

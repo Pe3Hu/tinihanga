@@ -1,0 +1,61 @@
+class_name Slot
+extends MarginContainer
+
+
+@onready var pile_drop_area_top: Area2D = %PileDropAreaTop
+@onready var pile_drop_area_down: Area2D = %PileDropAreaDown
+@onready var piles_holder: VBoxContainer = %PilesHolder
+
+
+func _ready() -> void:
+	resize_collision_shapes()
+	%Label.text = name
+	
+	for child in piles_holder.get_children():
+		var pile := child as Pile
+		pile.current_slot = self
+	
+func resize_collision_shapes() -> void:
+	var collision_shape = pile_drop_area_top.get_child(0)
+	collision_shape.shape.size = Vector2(size.x, size.y / 2)
+	collision_shape.position = Vector2(size.x / 2, size.y / 4)
+	pile_drop_area_down.position.y = size.y / 2
+	collision_shape = pile_drop_area_down.get_child(0)
+	collision_shape.shape.size = Vector2(size.x, size.y / 2)
+	collision_shape.position = Vector2(size.x / 2, size.y / 4)
+	
+func return_pile_starting_position(pile_: Pile) -> void:
+	piles_holder.remove_child(pile_)
+	piles_holder.add_child(pile_)
+	#pile_.reparent(piles_holder)
+	piles_holder.move_child(pile_, pile_.index)
+	
+func set_new_pile(pile_: Pile) -> void:
+	pile_reposition(pile_)
+	pile_.current_slot = self
+	
+func pile_reposition(pile_: Pile) -> void:
+	var slot_areas = pile_.drop_point_detector.get_overlapping_areas()
+	var pile_areas = pile_.zones_detector.get_overlapping_areas()
+	var index: int = 0
+	
+	if pile_areas.is_empty():
+		#print(slot_areas.has(pile_drop_area_down))
+		if slot_areas.has(pile_drop_area_down):
+			index = piles_holder.get_children().size()
+	elif pile_areas.size() == 1:
+		if slot_areas.has(pile_drop_area_top):
+			index = pile_areas[0].get_parent().get_index()
+		else:
+			index = pile_areas[0].get_parent().get_index() + 1
+	else:
+		index = pile_areas[0].get_parent().get_index()
+		if index > pile_areas[1].get_parent().get_index():
+			index = pile_areas[1].get_parent().get_index()
+		
+		index += 1
+	
+	pile_.reparent(piles_holder)
+	piles_holder.remove_child(pile_)
+	piles_holder.add_child(pile_)
+	piles_holder.move_child(pile_, index)

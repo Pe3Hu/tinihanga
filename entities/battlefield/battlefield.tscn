@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8y022a6as6j8"]
+
+[ext_resource type="PackedScene" uid="uid://fmce84a34xw5" path="res://entities/slot/slot.tscn" id="1_wokky"]
+[ext_resource type="PackedScene" uid="uid://djj2tbo6fx0g4" path="res://entities/slot/zone/pile/pile.tscn" id="2_gj6b4"]
+[ext_resource type="PackedScene" uid="uid://b84mg7ou5fxfa" path="res://entities/slot/zone/card/card.tscn" id="3_gyi17"]
+
+[node name="Battlefield" type="CanvasLayer"]
+
+[node name="Slot" parent="." instance=ExtResource("1_wokky")]
+offset_left = 645.0
+offset_top = 341.0
+offset_right = 265.00067
+offset_bottom = 304.3334
+
+[node name="PilesHolder" parent="Slot" index="2"]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Pile" parent="Slot/PilesHolder" index="0" instance=ExtResource("2_gj6b4")]
+layout_mode = 2
+
+[node name="Card" parent="Slot/PilesHolder/Pile/ZoneContainer/VBoxContainer/CardsHolder" index="0" instance=ExtResource("3_gyi17")]
+layout_mode = 2
+
+[node name="Card2" parent="Slot/PilesHolder/Pile/ZoneContainer/VBoxContainer/CardsHolder" index="1" instance=ExtResource("3_gyi17")]
+layout_mode = 2
+
+[node name="Slot2" parent="." instance=ExtResource("1_wokky")]
+offset_left = 645.0
+offset_top = 641.0
+offset_right = 265.00067
+offset_bottom = 604.3334
+
+[node name="PilesHolder" parent="Slot2" index="2"]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Pile" parent="Slot2/PilesHolder" index="0" instance=ExtResource("2_gj6b4")]
+layout_mode = 2
+
+[node name="Card" parent="Slot2/PilesHolder/Pile/ZoneContainer/VBoxContainer/CardsHolder" index="0" instance=ExtResource("3_gyi17")]
+layout_mode = 2
+
+[editable path="Slot"]
+[editable path="Slot/PilesHolder/Pile"]
+[editable path="Slot2"]
+[editable path="Slot2/PilesHolder/Pile"]
