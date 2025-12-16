@@ -52,7 +52,7 @@ func fill_faction_knots() -> void:
 			var previous_shift = (previous_knot.position - origin_knot.position) / parts
 			previous_shift = previous_shift.rotated(angle_bias)
 			
-			for _i in (_ring + 1):
+			for _i in range(1, _ring + 1):
 				var next_position = origin_knot.position + next_shift * _i
 				add_knot(faction, _ring, next_position)
 				var previous_position = origin_knot.position + previous_shift * _i

@@ -2,22 +2,19 @@ class_name Card
 extends Zone
 
 
-#@onready var color_rect: ColorRect = %ColorRect
-#@onready var label: Label = %Label
-@onready var name_label: Label = %NameLabel
+@onready var power_token: Token = %PowerToken
 @onready var state_label: Label = %StateLabel
 @onready var current_pile: Pile
 
+@export var resource: CardResource:
+	set(value_):
+		resource = value_
+		power_token.material = ShaderMaterial.new()
+		power_token.type = State.Token.ELEMENT
+		power_token.element = resource.element
+		power_token.value_int = resource.power
 
 
-func _ready():
-	is_locked = false
-	super._ready()
-	update_name_label()
-	
-func update_name_label() -> void:
-	name_label.text = str(get_index())
-	
 #func reset_shape_size() -> void:
 	#var card_size = Vector2(50, 32)
 	#var collision_shape = drop_point_detector.get_child(0)

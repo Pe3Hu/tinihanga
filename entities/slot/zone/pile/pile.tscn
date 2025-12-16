@@ -1,31 +1,38 @@
-[gd_scene load_steps=7 format=3 uid="uid://djj2tbo6fx0g4"]
+[gd_scene load_steps=10 format=3 uid="uid://djj2tbo6fx0g4"]
 
 [ext_resource type="PackedScene" uid="uid://bi7ecitk5t7rc" path="res://entities/slot/zone/zone.tscn" id="1_bqtvb"]
 [ext_resource type="Script" uid="uid://g52ib5cneaxl" path="res://entities/slot/zone/pile/pile.gd" id="2_fe8y6"]
+[ext_resource type="PackedScene" uid="uid://d08ecgpi46xkw" path="res://entities/table/token/token.tscn" id="3_q4d0q"]
+[ext_resource type="Texture2D" uid="uid://qv3swufry6nr" path="res://entities/table/token/images/power.png" id="4_5xnwi"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fe8y6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fe8y6"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xnwi"]
 size = Vector2(160, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_34416"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pboex"]
+size = Vector2(160, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_17ylr"]
 size = Vector2(50, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_txf6i"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gvoa"]
 size = Vector2(50, 32)
 
 [node name="Pile" instance=ExtResource("1_bqtvb")]
-custom_minimum_size = Vector2(320, 32)
+custom_minimum_size = Vector2(48, 48)
 script = ExtResource("2_fe8y6")
+type = 0
 
 [node name="ZoneContainer" parent="." index="0"]
-custom_minimum_size = Vector2(320, 32)
-offset_right = 320.0
+custom_minimum_size = Vector2(48, 48)
+offset_right = 150.0
+offset_bottom = 99.0
 
 [node name="ColorRect" type="ColorRect" parent="ZoneContainer" index="0"]
 layout_mode = 2
 mouse_filter = 1
-color = Color(0, 0.65551686, 0.6598048, 1)
+color = Color(0.55854183, 0.5749373, 0.59148407, 1)
 
 [node name="Label" type="Label" parent="ZoneContainer" index="1"]
 unique_name_in_owner = true
@@ -35,10 +42,23 @@ text = "Name"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ZoneContainer" index="2"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 3
 alignment = 1
 
-[node name="LockCheckButton" type="CheckButton" parent="ZoneContainer/VBoxContainer" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ZoneContainer/VBoxContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="PowerToken" parent="ZoneContainer/VBoxContainer/HBoxContainer" index="0" instance=ExtResource("3_q4d0q")]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("4_5xnwi")
+type = 0
+element = 0
+
+[node name="LockCheckButton" type="CheckButton" parent="ZoneContainer/VBoxContainer/HBoxContainer" index="1"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -48,11 +68,10 @@ text = "lock"
 
 [node name="CardsHolder" type="HBoxContainer" parent="ZoneContainer/VBoxContainer" index="1"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(320, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 4
+theme_override_constants/separation = 3
 alignment = 1
 
 [node name="CardDropAreaRight" type="Area2D" parent="ZoneContainer" index="3"]
@@ -64,7 +83,8 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneContainer/CardDropAreaRight" index="0"]
 position = Vector2(80, 16)
-shape = SubResource("RectangleShape2D_fe8y6")
+shape = SubResource("RectangleShape2D_5xnwi")
+debug_color = Color(0.82950175, 0.32065946, 0.59493226, 0.41960785)
 
 [node name="CardDropAreaLeft" type="Area2D" parent="ZoneContainer" index="4"]
 unique_name_in_owner = true
@@ -74,7 +94,8 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneContainer/CardDropAreaLeft" index="0"]
 position = Vector2(80, 16)
-shape = SubResource("RectangleShape2D_fe8y6")
+shape = SubResource("RectangleShape2D_pboex")
+debug_color = Color(0.3452509, 0.6016771, 0.43868756, 0.41960785)
 
 [node name="DropPointDetector" parent="." index="2"]
 collision_layer = 8
@@ -82,7 +103,8 @@ collision_mask = 4
 
 [node name="CollisionShape2D" parent="DropPointDetector" index="0"]
 position = Vector2(160, 16)
-shape = SubResource("RectangleShape2D_34416")
+shape = SubResource("RectangleShape2D_17ylr")
+debug_color = Color(0.38994843, 0.5987788, 0.3599351, 0.41960785)
 
 [node name="ZonesDetector" parent="." index="3"]
 collision_layer = 2
@@ -90,6 +112,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D" parent="ZonesDetector" index="0"]
 position = Vector2(160, 16)
-shape = SubResource("RectangleShape2D_txf6i")
+shape = SubResource("RectangleShape2D_6gvoa")
+debug_color = Color(0.7926015, 0.37146845, 0.55857146, 0.41960785)
 
-[connection signal="pressed" from="ZoneContainer/VBoxContainer/LockCheckButton" to="." method="_on_lock_check_box_pressed"]
+[connection signal="pressed" from="ZoneContainer/VBoxContainer/HBoxContainer/LockCheckButton" to="." method="_on_lock_check_box_pressed"]

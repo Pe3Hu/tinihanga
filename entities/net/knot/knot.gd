@@ -6,7 +6,7 @@ var resource: KnotResource:
 	set(value_):
 		resource = value_
 		position = resource.position
-		%Sprite2D.modulate = Catalog.faction_to_color[resource.faction]
+		#%Sprite2D.modulate = Catalog.faction_to_color[resource.faction]
 
 
 func _ready() -> void:

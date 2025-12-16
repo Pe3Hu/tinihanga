@@ -7,7 +7,7 @@ var resource: NetResource = NetResource.new()
 
 
 func _ready() -> void:
-	position = get_tree().get_root().size / 2
+	position = Catalog.NEX_PANEL_SIZE / 2#get_tree().get_root().size / 2
 	init_knots()
 	
 func init_knots() -> void:

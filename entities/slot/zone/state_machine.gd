@@ -12,6 +12,11 @@ signal transitioned
 		
 		if zone as Card:
 			zone.state_label.text = Catalog.machine_to_string[current_state]
+		#if zone as Pile:
+			#if current_state == State.Machine.DRAG:
+				#zone.hide_while_drag()
+			#else:
+				#zone.show_after_releas()
 
 
 func _ready() -> void:

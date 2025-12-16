@@ -6,14 +6,23 @@ extends MarginContainer
 @onready var pile_drop_area_down: Area2D = %PileDropAreaDown
 @onready var piles_holder: VBoxContainer = %PilesHolder
 
+@export var type: State.Slot
+
 
 func _ready() -> void:
+	recreate_collision_shapes()
 	resize_collision_shapes()
-	%Label.text = name
+	%NameLabel.text = name
 	
 	for child in piles_holder.get_children():
 		var pile := child as Pile
 		pile.current_slot = self
+	
+func recreate_collision_shapes() -> void:
+	var collision_shape = pile_drop_area_top.get_child(0)
+	collision_shape.shape = RectangleShape2D.new()
+	collision_shape = pile_drop_area_down.get_child(0)
+	collision_shape.shape = RectangleShape2D.new()
 	
 func resize_collision_shapes() -> void:
 	var collision_shape = pile_drop_area_top.get_child(0)

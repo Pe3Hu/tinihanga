@@ -14,10 +14,6 @@ extends Control
 var index: int = 0
 
 
-func _ready() -> void:
-	#name_label.text = name
-	pass
-	
 func _input(event_: InputEvent) -> void:
 	state_machine.on_input(event_)
 	

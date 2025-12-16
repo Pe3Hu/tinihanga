@@ -1,12 +1,20 @@
-res://entities/knot/knot.tscn
-res://entities/knot/knot.gd
-res://entities/net/note.tscn
-res://entities/net/note.gd
-res://entities/net/net_resource.gd
-res://entities/knot/knot_resource.gd
+res://entities/table/table.tscn
+res://entities/table/token/shaders/4 corner gradient.gdshader
+res://entities/table/token/shaders/split gradient.gdshader
+res://entities/net/knot/knot.tscn
+res://entities/slot/zone/pile/pile_resource.gd
 res://global/Catalog.gd
 res://global/State.gd
+res://entities/table/deck/deck_resource.gd
+res://entities/slot/zone/card/card_resource.gd
+res://entities/table/table.gd
+res://entities/slot/zone/card/card.gd
+res://entities/slot/zone/pile/pile.tscn
+res://entities/slot/zone/pile/pile.gd
+res://entities/slot/slot.gd
+res://entities/slot/zone/state_machine.gd
+res://entities/slot/slot.tscn
 res://entities/net/net.tscn
-res://entities/net/net.gd
-res://entities/world/world.tscn
-res://entities/world/world.gd
+res://entities/battlefield/battlefield.tscn
+res://entities/net/net_resource.gd
+res://entities/table/token/token.gd

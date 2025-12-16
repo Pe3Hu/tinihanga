@@ -1,35 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://fmce84a34xw5"]
+[gd_scene load_steps=4 format=3 uid="uid://fmce84a34xw5"]
 
 [ext_resource type="Script" uid="uid://g0iwdv5c6xin" path="res://entities/slot/slot.gd" id="1_sbce3"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_crh71"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uv42o"]
+size = Vector2(320, 105)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbkgj"]
 size = Vector2(320, 105)
 
 [node name="Slot" type="MarginContainer"]
 custom_minimum_size = Vector2(320, 210)
-anchors_preset = -1
-anchor_right = 0.364583
-anchor_bottom = 0.228395
-offset_right = -666.9993
-offset_bottom = -230.6666
+offset_right = 320.0
+offset_bottom = 210.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_sbce3")
-metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
 modulate = Color(1, 1, 1, 0.278431)
 layout_mode = 2
-
-[node name="Label" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Name"
 
 [node name="PilesHolder" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 3
 alignment = 1
+
+[node name="NameLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Name"
 
 [node name="PileDropAreaTop" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -39,7 +41,8 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PileDropAreaTop"]
 position = Vector2(160, 52)
-shape = SubResource("RectangleShape2D_crh71")
+shape = SubResource("RectangleShape2D_uv42o")
+debug_color = Color(0.69069374, 0.3957575, 0.7803759, 0.41960785)
 
 [node name="PileDropAreaDown" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -50,4 +53,5 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PileDropAreaDown"]
 position = Vector2(160, 52)
-shape = SubResource("RectangleShape2D_crh71")
+shape = SubResource("RectangleShape2D_bbkgj")
+debug_color = Color(0.6674641, 0.49659103, 0.34121713, 0.41960785)
