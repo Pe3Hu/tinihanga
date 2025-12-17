@@ -26,9 +26,10 @@ func _ready() -> void:
 		call_deferred("_enter")
 	
 func _enter() -> void:
-	if zone.is_locked: return
+	if zone as Pile:
+		if zone.status != State.Status.PACKED: return
 	if zone as Card:
-		if !zone.current_pile.is_locked: return
+		if zone.status != State.Status.WAITING: return
 	match current_state:
 		State.Machine.IDLE:
 			zone.pivot_offset = Vector2.ZERO
@@ -43,9 +44,10 @@ func _enter() -> void:
 			transitioned.emit(State.Machine.IDLE)
 	
 func drop_update() -> void:
-	if zone.is_locked: return
+	if zone as Pile:
+		if zone.status != State.Status.PACKED: return
 	if zone as Card:
-		if !zone.current_pile.is_locked: return
+		if zone.status != State.Status.WAITING: return
 	if zone as Card:
 		update_current_pile()
 	if zone as Pile:
@@ -77,9 +79,10 @@ func update_current_slot() -> void:
 		new_slot.set_new_pile(zone)
 	
 func on_input(event_: InputEvent) -> void:
-	if zone.is_locked: return
+	if zone as Pile:
+		if zone.status != State.Status.PACKED: return
 	if zone as Card:
-		if !zone.current_pile.is_locked: return
+		if zone.status != State.Status.WAITING: return
 	match current_state:
 		State.Machine.CLICK:
 			if event_ is InputEventMouseMotion:
@@ -96,9 +99,10 @@ func on_input(event_: InputEvent) -> void:
 				transitioned.emit(State.Machine.RELEASE)
 	
 func on_gui_input(event_: InputEvent) -> void:
-	if zone.is_locked: return
+	if zone as Pile:
+		if zone.status != State.Status.PACKED: return
 	if zone as Card:
-		if !zone.current_pile.is_locked: return
+		if zone.status != State.Status.WAITING: return
 	match current_state:
 		State.Machine.HOVER:
 			if event_.is_action_pressed("mouse_left"):
@@ -106,24 +110,27 @@ func on_gui_input(event_: InputEvent) -> void:
 				transitioned.emit(State.Machine.CLICK)
 	
 func on_mouse_entered() -> void:
-	if zone.is_locked: return
+	if zone as Pile:
+		if zone.status != State.Status.PACKED: return
 	if zone as Card:
-		if !zone.current_pile.is_locked: return
+		if zone.status != State.Status.WAITING: return
 	match current_state:
 		State.Machine.IDLE:
 			transitioned.emit(State.Machine.HOVER)
 	
 func on_mouse_exited() -> void:
-	if zone.is_locked: return
+	if zone as Pile:
+		if zone.status != State.Status.PACKED: return
 	if zone as Card:
-		if !zone.current_pile.is_locked: return
+		if zone.status != State.Status.WAITING: return
 	match current_state:
 		State.Machine.HOVER:
 			transitioned.emit(State.Machine.IDLE)
 	
 func on_child_transition(new_state_: State.Machine) -> void:
-	if zone.is_locked: return
+	if zone as Pile:
+		if zone.status != State.Status.PACKED: return
 	if zone as Card:
-		if !zone.current_pile.is_locked: return
+		if zone.status != State.Status.WAITING: return
 	call_deferred("_enter")
 	current_state = new_state_

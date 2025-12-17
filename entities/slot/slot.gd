@@ -7,6 +7,7 @@ extends MarginContainer
 @onready var piles_holder: VBoxContainer = %PilesHolder
 
 @export var type: State.Slot
+@export var is_loner: bool = true
 
 
 func _ready() -> void:
@@ -40,6 +41,13 @@ func return_pile_starting_position(pile_: Pile) -> void:
 	piles_holder.move_child(pile_, pile_.index)
 	
 func set_new_pile(pile_: Pile) -> void:
+	if is_loner and piles_holder.get_child_count() == 1:
+		pile_.current_slot.return_pile_starting_position(pile_)
+		return
+	
+	if type != State.Slot.ANY:
+		pile_.status = State.Status.PINNED
+	
 	pile_reposition(pile_)
 	pile_.current_slot = self
 	

@@ -36,5 +36,5 @@ func _on_undo_button_pressed() -> void:
 	if active_pile.current_slot != active_slot:
 		active_slot.set_new_pile(active_pile)
 		active_pile.show_after_release()
-		active_pile.is_locked = false
 		active_pile.lock_button.button_pressed = false
+		active_pile.status = State.Status.WAITING

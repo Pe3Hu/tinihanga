@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0vjwm01bb3w8"]
+[gd_scene load_steps=8 format=3 uid="uid://c0vjwm01bb3w8"]
 
 [ext_resource type="PackedScene" uid="uid://fmce84a34xw5" path="res://entities/slot/slot.tscn" id="1_3a4ns"]
 [ext_resource type="Script" uid="uid://b1fpfumm0kmbl" path="res://entities/table/table.gd" id="1_x151d"]
 [ext_resource type="PackedScene" uid="uid://b84mg7ou5fxfa" path="res://entities/slot/zone/card/card.tscn" id="2_8iqho"]
 [ext_resource type="PackedScene" uid="uid://djj2tbo6fx0g4" path="res://entities/slot/zone/pile/pile.tscn" id="3_8iqho"]
 [ext_resource type="Shader" uid="uid://fay3xeuw6qav" path="res://entities/table/token/shaders/4 corner gradient.gdshader" id="4_jaq8v"]
+[ext_resource type="FontFile" uid="uid://cnsjgv1vojrgp" path="res://assets/fonts/Chicoree.ttf" id="6_jaq8v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xusbr"]
 shader = ExtResource("4_jaq8v")
@@ -56,6 +57,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 48)
 layout_mode = 2
 type = 2
+status = 3
 
 [node name="ZoneContainer" parent="HandSlot/PilesHolder/HandPile" index="0"]
 offset_right = 320.0
@@ -70,10 +72,11 @@ visible = false
 [node name="UndoButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 181.0
-offset_top = 46.0
-offset_right = 247.0
-offset_bottom = 77.0
+offset_left = 72.0
+offset_top = -20.0
+offset_right = 154.0
+offset_bottom = 11.0
+theme_override_fonts/font = ExtResource("6_jaq8v")
 text = "вернуть"
 
 [connection signal="pressed" from="UndoButton" to="." method="_on_undo_button_pressed"]

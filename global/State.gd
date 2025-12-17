@@ -65,3 +65,10 @@ enum Slot{
 	VI = 6,
 	VII = 7,
 }
+
+enum Status{
+	WAITING = 0,
+	PACKED = 1,
+	TIED = 2,
+	PINNED = 3,
+}

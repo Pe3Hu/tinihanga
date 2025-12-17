@@ -11,10 +11,12 @@ extends Zone
 
 @export var type: State.Pile
 
+@export var is_card_movement_allowed: bool = true
+
 
 func _ready() -> void:
 	#%Label.text = name
-	_on_lock_check_box_pressed()
+	#_on_lock_check_box_pressed()
 	recreate_collision_shapes()
 	resize_collision_shapes()
 	
@@ -58,7 +60,8 @@ func return_card_starting_position(card_: Card) -> void:
 	cards_holder.move_child(card_, card_.index)
 	
 func set_new_card(card_: Card) -> void:
-	if Catalog.pile_to_card_limit[type] == cards_holder.get_child_count():
+	if !is_card_movement_allowed:
+	#if Catalog.pile_to_card_limit[type] == cards_holder.get_child_count():
 		card_.current_pile.return_card_starting_position(card_)
 		return
 	
@@ -101,15 +104,23 @@ func update_card_index() -> void:
 		#card.update_value_label()
 	
 func _on_lock_check_box_pressed() -> void:
-	is_locked = !lock_button.button_pressed
+	if lock_button.button_pressed:
+		status = State.Status.PACKED
+	else:
+		status = State.Status.WAITING
+	update_card_movement_permit()
 	
 	if type == State.Pile.ACTIVE:
-		if !is_locked:
-			hide_while_drag()
-		else:
-			show_after_release()
+		match status:
+			State.Status.PINNED:
+				hide_while_drag()
+			State.Status.PACKED:
+				hide_while_drag()
+			State.Status.WAITING:
+				show_after_release()
 	
 func update_power_token(card_: Card, is_added_: bool) -> void:
+	update_card_movement_permit()
 	if is_added_:
 		if cards_holder.get_child_count() == 1:
 			power_token.element = card_.resource.element
@@ -124,10 +135,11 @@ func update_power_token(card_: Card, is_added_: bool) -> void:
 			power_token.value_int -= card_.resource.power
 			power_token.element = get_pile_element()
 	
-	if cards_holder.get_child_count() < 3:
-		print([is_added_, power_token.element])
+	#if cards_holder.get_child_count() < 3:
+	#	print([is_added_, power_token.element])
 	
 func reset_power_token() -> void:
+	power_token.type = State.Token.POWER
 	power_token.element = State.Element.CHAOS
 	power_token.value_int = 0
 	
@@ -160,3 +172,14 @@ func show_after_release() -> void:
 	lock_button.visible = true
 	zone_container.size = Catalog.pile_to_size[type]
 	resize_collision_shapes()
+	
+func update_card_movement_permit() -> void:
+	if type == State.Pile.HAND:
+		is_card_movement_allowed  = true
+		return
+	if status != State.Status.WAITING:
+		is_card_movement_allowed  = false
+		return
+	
+	is_card_movement_allowed = Catalog.pile_to_card_limit[type] != cards_holder.get_child_count()
+	

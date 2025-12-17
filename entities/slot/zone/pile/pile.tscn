@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://djj2tbo6fx0g4"]
+[gd_scene load_steps=9 format=3 uid="uid://djj2tbo6fx0g4"]
 
 [ext_resource type="PackedScene" uid="uid://bi7ecitk5t7rc" path="res://entities/slot/zone/zone.tscn" id="1_bqtvb"]
 [ext_resource type="Script" uid="uid://g52ib5cneaxl" path="res://entities/slot/zone/pile/pile.gd" id="2_fe8y6"]
 [ext_resource type="PackedScene" uid="uid://d08ecgpi46xkw" path="res://entities/table/token/token.tscn" id="3_q4d0q"]
-[ext_resource type="Texture2D" uid="uid://qv3swufry6nr" path="res://entities/table/token/images/power.png" id="4_5xnwi"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fe8y6"]
 
@@ -23,6 +22,7 @@ size = Vector2(50, 32)
 custom_minimum_size = Vector2(48, 48)
 script = ExtResource("2_fe8y6")
 type = 0
+is_card_movement_allowed = true
 
 [node name="ZoneContainer" parent="." index="0"]
 custom_minimum_size = Vector2(48, 48)
@@ -54,8 +54,7 @@ theme_override_constants/separation = 4
 [node name="PowerToken" parent="ZoneContainer/VBoxContainer/HBoxContainer" index="0" instance=ExtResource("3_q4d0q")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("4_5xnwi")
-type = 0
+genesis = 0
 element = 0
 
 [node name="LockCheckButton" type="CheckButton" parent="ZoneContainer/VBoxContainer/HBoxContainer" index="1"]

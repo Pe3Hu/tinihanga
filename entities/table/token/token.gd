@@ -9,9 +9,8 @@ extends TextureRect
 	set(value_):
 		genesis = value_
 		
-		if genesis != State.Genesis.NONE and type == State.Token.ELEMENT:
-			var path = "res://entities/table/token/images/genesis/{genesis}.png".format({"genesis": Catalog.genesis_to_string[genesis]})
-			texture = load(path)
+		if genesis != State.Genesis.NONE:
+			update_texture()
 @export var type: State.Token:
 	set(value_):
 		type = value_
@@ -25,28 +24,27 @@ extends TextureRect
 			State.Token.ELEMENT:
 				pass
 			State.Token.HEALTH:
-				var path = "res://entities/table/token/images/{type}.png".format({"type": Catalog.token_to_string[type]})
-				texture = load(path)
+				update_texture()
 				element = State.Element.FIRE
 			State.Token.POWER:
-				var path = "res://entities/table/token/images/{type}.png".format({"type": Catalog.token_to_string[type]})
-				texture = load(path)
+				update_texture()
 @export var element: State.Element:
 	set(value_):
 		element = value_
 		
 		if element == State.Element.CHAOS:
 			genesis = State.Genesis.NONE
-			type = State.Token.NONE
+			#type = State.Token.NONE
 			material.shader = load("res://entities/table/token/shaders/4 corner gradient.gdshader")
 		else:
-			if type != State.Token.POWER and type != State.Token.HEALTH:
+			if type == State.Token.NONE:
 			#if genesis == State.Genesis.NONE:
 				type = State.Token.ELEMENT
-				for _genesis in Catalog.GENESISES:
-					if Catalog.genesis_to_element[_genesis].has(element):
-						genesis = _genesis
-						break
+			
+			for _genesis in Catalog.GENESISES:
+				if Catalog.genesis_to_element[_genesis].has(element):
+					genesis = _genesis
+					break
 			
 			material.shader = load("res://entities/table/token/shaders/split gradient.gdshader")
 			update_element_hues()
@@ -57,6 +55,21 @@ extends TextureRect
 		if value_label:
 			value_label.text = str(value_int)
 
+
+func update_texture() -> void:
+	var path = "res://entities/table/token/images/"
+	
+	match type:
+		State.Token.NONE:
+			return
+		State.Token.ELEMENT:
+			path += "genesis/{genesis}.png".format({"genesis": Catalog.genesis_to_string[genesis]})
+		State.Token.HEALTH:
+			path += "{type}.png".format({"type": Catalog.token_to_string[type]})
+		State.Token.POWER:
+			path += "{type}.png".format({"type": Catalog.token_to_string[type]})
+	
+	texture = load(path)
 
 func update_element_hues() -> void:
 	var max_h = 360.0

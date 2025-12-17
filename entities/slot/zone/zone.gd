@@ -7,9 +7,9 @@ extends Control
 @onready var zones_detector: Area2D = %ZonesDetector
 @onready var zone_container: MarginContainer = %ZoneContainer
 
-@export var is_locked: bool = true:
+@export var status: State.Status:
 	set(value_):
-		is_locked = value_
+		status = value_
 
 var index: int = 0
 
