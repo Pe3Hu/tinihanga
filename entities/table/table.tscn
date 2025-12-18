@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0vjwm01bb3w8"]
+[gd_scene load_steps=11 format=3 uid="uid://c0vjwm01bb3w8"]
 
 [ext_resource type="PackedScene" uid="uid://fmce84a34xw5" path="res://entities/slot/slot.tscn" id="1_3a4ns"]
 [ext_resource type="Script" uid="uid://b1fpfumm0kmbl" path="res://entities/table/table.gd" id="1_x151d"]
@@ -7,12 +7,24 @@
 [ext_resource type="Shader" uid="uid://fay3xeuw6qav" path="res://entities/table/token/shaders/4 corner gradient.gdshader" id="4_jaq8v"]
 [ext_resource type="FontFile" uid="uid://cnsjgv1vojrgp" path="res://assets/fonts/Chicoree.ttf" id="6_jaq8v"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xusbr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jaq8v"]
 shader = ExtResource("4_jaq8v")
 shader_parameter/bottomleft = Color(0, 0, 0.9, 1)
 shader_parameter/topleft = Color(0, 0.9, 0, 1)
 shader_parameter/bottomright = Color(0.9, 0, 0, 1)
 shader_parameter/topright = Color(0.9, 0.9, 0.1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqy5j"]
+resource_local_to_scene = true
+shader = ExtResource("4_jaq8v")
+shader_parameter/bottomleft = Color(0, 0, 0.9, 1)
+shader_parameter/topleft = Color(0, 0.9, 0, 1)
+shader_parameter/bottomright = Color(0.9, 0, 0, 1)
+shader_parameter/topright = Color(0.9, 0.9, 0.1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jaq8v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fqy5j"]
 
 [node name="Table" type="Control"]
 layout_mode = 3
@@ -22,49 +34,59 @@ size_flags_vertical = 4
 script = ExtResource("1_x151d")
 card_scene = ExtResource("2_8iqho")
 
-[node name="ActiveSlot" parent="." instance=ExtResource("1_3a4ns")]
+[node name="FieldSlot" parent="." instance=ExtResource("1_3a4ns")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 100)
 layout_mode = 0
 offset_left = -80.0
-offset_top = -125.0
+offset_top = -110.0
 offset_right = 80.0
-offset_bottom = -25.0
+offset_bottom = -10.0
+type = 1
+pack = 7
 
-[node name="ActivePile" parent="ActiveSlot/PilesHolder" index="0" instance=ExtResource("3_8iqho")]
+[node name="FieldPile" parent="FieldSlot/PilesHolder" index="0" instance=ExtResource("3_8iqho")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 100)
 layout_mode = 2
 type = 1
 
-[node name="PowerToken" parent="ActiveSlot/PilesHolder/ActivePile/ZoneContainer/VBoxContainer/HBoxContainer" index="0"]
-material = SubResource("ShaderMaterial_xusbr")
+[node name="PowerToken" parent="FieldSlot/PilesHolder/FieldPile/ZoneContainer/VBoxContainer/HBoxContainer" index="0"]
+material = SubResource("ShaderMaterial_jaq8v")
 
-[node name="CardsHolder" parent="ActiveSlot/PilesHolder/ActivePile/ZoneContainer/VBoxContainer" index="1"]
+[node name="CardsHolder" parent="FieldSlot/PilesHolder/FieldPile/ZoneContainer/VBoxContainer" index="1"]
 custom_minimum_size = Vector2(0, 48)
 
 [node name="HandSlot" parent="." instance=ExtResource("1_3a4ns")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(320, 48)
+custom_minimum_size = Vector2(309, 54)
 layout_mode = 0
 offset_left = -160.0
-offset_top = 25.0
-offset_right = 160.0
-offset_bottom = 73.0
+offset_top = 10.0
+offset_right = 166.0
+offset_bottom = 64.0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="PilesHolder" parent="HandSlot" index="1"]
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="HandPile" parent="HandSlot/PilesHolder" index="0" instance=ExtResource("3_8iqho")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 48)
 layout_mode = 2
-type = 2
 status = 3
 
 [node name="ZoneContainer" parent="HandSlot/PilesHolder/HandPile" index="0"]
-offset_right = 320.0
-offset_bottom = 48.0
+offset_right = 309.0
+offset_bottom = 54.0
 
 [node name="PowerToken" parent="HandSlot/PilesHolder/HandPile/ZoneContainer/VBoxContainer/HBoxContainer" index="0"]
 visible = false
+material = SubResource("ShaderMaterial_fqy5j")
 
 [node name="LockCheckButton" parent="HandSlot/PilesHolder/HandPile/ZoneContainer/VBoxContainer/HBoxContainer" index="1"]
 visible = false
@@ -72,16 +94,31 @@ visible = false
 [node name="UndoButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 72.0
-offset_top = -20.0
-offset_right = 154.0
-offset_bottom = 11.0
+offset_left = 80.0
+offset_top = -30.0
+offset_right = 162.0
+offset_bottom = 1.0
 theme_override_fonts/font = ExtResource("6_jaq8v")
-text = "вернуть"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jaq8v")
+text = "undo"
+
+[node name="RedoButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 81.0
+offset_top = -69.0
+offset_right = 163.0
+offset_bottom = -38.0
+theme_override_fonts/font = ExtResource("6_jaq8v")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fqy5j")
+text = "redo
+"
 
 [connection signal="pressed" from="UndoButton" to="." method="_on_undo_button_pressed"]
+[connection signal="pressed" from="RedoButton" to="." method="_on_redo_button_pressed"]
 
-[editable path="ActiveSlot"]
-[editable path="ActiveSlot/PilesHolder/ActivePile"]
+[editable path="FieldSlot"]
+[editable path="FieldSlot/PilesHolder/FieldPile"]
+[editable path="FieldSlot/PilesHolder/FieldPile/ZoneContainer/VBoxContainer/HBoxContainer/PowerToken"]
 [editable path="HandSlot"]
 [editable path="HandSlot/PilesHolder/HandPile"]

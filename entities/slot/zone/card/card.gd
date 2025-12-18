@@ -4,7 +4,14 @@ extends Zone
 
 @onready var power_token: Token = %PowerToken
 @onready var state_label: Label = %StateLabel
-@onready var current_pile: Pile
+@onready var current_pile: Pile:
+	set(value_):
+		previous_pile = current_pile
+		current_pile = value_
+		
+		if previous_pile == null:
+			previous_pile = current_pile
+@onready var previous_pile: Pile
 
 @export var resource: CardResource:
 	set(value_):

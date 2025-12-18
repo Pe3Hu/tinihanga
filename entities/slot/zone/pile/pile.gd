@@ -7,22 +7,33 @@ extends Zone
 @onready var cards_holder: HBoxContainer = %CardsHolder
 @onready var lock_button: CheckButton = %LockCheckButton
 @onready var power_token: Token = %PowerToken
-@onready var current_slot: Slot
+@onready var current_slot: Slot:
+	set(value_):
+		previous_slot = current_slot
+		current_slot = value_
+		
+		if previous_slot == null:
+			previous_slot = current_slot
+@onready var previous_slot: Slot
 
 @export var type: State.Pile
-
 @export var is_card_movement_allowed: bool = true
+
+var resource: PileResource
 
 
 func _ready() -> void:
-	#%Label.text = name
-	#_on_lock_check_box_pressed()
+	make_power_token_unique()
 	recreate_collision_shapes()
 	resize_collision_shapes()
 	
 	for child in cards_holder.get_children():
 		var card := child as Card
 		card.current_pile = self
+	
+func make_power_token_unique() -> void:
+	power_token.material = ShaderMaterial.new()
+	power_token.element = power_token.element
 	
 func recreate_collision_shapes() -> void:
 	var collision_shape = card_drop_area_right.get_child(0)
@@ -60,7 +71,7 @@ func return_card_starting_position(card_: Card) -> void:
 	cards_holder.move_child(card_, card_.index)
 	
 func set_new_card(card_: Card) -> void:
-	if !is_card_movement_allowed:
+	if !is_card_movement_allowed or card_.resource.faction != resource.faction:
 	#if Catalog.pile_to_card_limit[type] == cards_holder.get_child_count():
 		card_.current_pile.return_card_starting_position(card_)
 		return
@@ -101,23 +112,32 @@ func card_reposition(card_: Card) -> void:
 func update_card_index() -> void:
 	for card in cards_holder.get_children():
 		card.index = card.get_index()
-		#card.update_value_label()
 	
 func _on_lock_check_box_pressed() -> void:
 	if lock_button.button_pressed:
-		status = State.Status.PACKED
+		History.undo_redo.create_action("Lock Pile")
+		History.undo_redo.add_do_method(pack_cards)
+		History.undo_redo.add_undo_method(unpack_cards)
+		History.undo_redo.commit_action()
+		#pack_cards()
 	else:
-		status = State.Status.WAITING
-	update_card_movement_permit()
+		History.undo_redo.create_action("Unlock Pile")
+		History.undo_redo.add_do_method(unpack_cards)
+		History.undo_redo.add_undo_method(pack_cards)
+		History.undo_redo.commit_action()
+		#unpack_cards()
 	
-	if type == State.Pile.ACTIVE:
-		match status:
-			State.Status.PINNED:
-				hide_while_drag()
-			State.Status.PACKED:
-				hide_while_drag()
-			State.Status.WAITING:
-				show_after_release()
+func pack_cards() -> void:
+	status = State.Status.PACKED
+	update_card_movement_permit()
+	if type == State.Pile.FIELD:
+		hide_while_drag()
+	
+func unpack_cards() -> void:
+	status = State.Status.WAITING
+	update_card_movement_permit()
+	if type == State.Pile.FIELD:
+		show_after_release()
 	
 func update_power_token(card_: Card, is_added_: bool) -> void:
 	update_card_movement_permit()
@@ -161,6 +181,7 @@ func get_pile_element() -> State.Element:
 func hide_while_drag() -> void:
 	cards_holder.visible = false
 	lock_button.visible = false
+	lock_button.button_pressed = true
 	
 	zone_container.size = Catalog.CARD_MAX_SIZE
 	resize_collision_shapes()
@@ -170,6 +191,8 @@ func show_after_release() -> void:
 	#if true: return
 	cards_holder.visible = true
 	lock_button.visible = true
+	lock_button.button_pressed = false
+	
 	zone_container.size = Catalog.pile_to_size[type]
 	resize_collision_shapes()
 	
@@ -183,3 +206,9 @@ func update_card_movement_permit() -> void:
 	
 	is_card_movement_allowed = Catalog.pile_to_card_limit[type] != cards_holder.get_child_count()
 	
+func get_card_based_on_resource(card_resource_: CardResource) -> Variant:
+	for card in cards_holder.get_children():
+		if card.resource == card_resource_:
+			return card
+	
+	return null

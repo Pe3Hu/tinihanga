@@ -1,11 +1,19 @@
-res://entities/slot/zone/pile/pile.tscn
+res://entities/battlefield/avatar/avatar.tscn
 res://entities/table/token/shaders/4 corner gradient.gdshader
 res://entities/table/token/shaders/split gradient.gdshader
-res://entities/slot/zone/pile/pile.gd
-res://entities/slot/zone/state_machine.gd
+res://entities/battlefield/avatar/avatar.gd
+res://entities/battlefield/avatar/avatar_resource.gd
+res://entities/battlefield/battlefield.tscn
+res://entities/net/net.gd
+res://entities/battlefield/battlefield_resource.gd
+res://entities/battlefield/battlefield.gd
+res://entities/net/net_resource.gd
+res://entities/referee/referee_resource.gd
+res://entities/referee/deck/deck_resource.gd
+res://entities/table/table_resource.gd
 res://entities/slot/slot.tscn
-res://entities/slot/slot.gd
-res://entities/table/table.tscn
-res://entities/slot/zone/zone.gd
-res://entities/slot/zone/card/card.tscn
 res://entities/table/table.gd
+res://entities/table/table.tscn
+res://entities/referee/player/adviser_resource.gd
+res://entities/slot/zone/pile/pile.tscn
+res://entities/slot/zone/pile/pile.gd

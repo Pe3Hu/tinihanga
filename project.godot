@@ -19,6 +19,7 @@ config/icon="res://assets/icon.svg"
 
 Catalog="*res://global/Catalog.gd"
 State="*res://global/State.gd"
+History="*res://global/History.gd"
 
 [display]
 
@@ -28,7 +29,9 @@ window/size/viewport_height=1080
 [file_customization]
 
 folder_colors={
+"res://entities/battlefield/": "green",
 "res://entities/net/": "yellow",
+"res://entities/referee/": "red",
 "res://entities/slot/": "purple",
 "res://entities/table/": "teal"
 }

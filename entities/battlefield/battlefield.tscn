@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8y022a6as6j8"]
+[gd_scene load_steps=6 format=3 uid="uid://c8y022a6as6j8"]
 
 [ext_resource type="PackedScene" uid="uid://bgtvfrdv16tkk" path="res://entities/net/net.tscn" id="1_dji8l"]
+[ext_resource type="Script" uid="uid://b5bjpvu7bglpa" path="res://entities/battlefield/battlefield.gd" id="1_jly4q"]
 [ext_resource type="PackedScene" uid="uid://c0vjwm01bb3w8" path="res://entities/table/table.tscn" id="2_jly4q"]
+[ext_resource type="PackedScene" uid="uid://t3x2byhxs5c3" path="res://entities/battlefield/avatar/avatar.tscn" id="5_030w6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dji8l"]
 
 [node name="Battlefield" type="CanvasLayer"]
+script = ExtResource("1_jly4q")
+table_scene = ExtResource("2_jly4q")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 8
@@ -13,23 +17,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -452.0
+offset_left = -250.0
 offset_top = -250.0
-offset_right = 452.0
+offset_right = 250.0
 offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="NetPanel" type="PanelContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(500, 500)
+custom_minimum_size = Vector2(900, 900)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dji8l")
 
-[node name="Net" parent="HBoxContainer/NetPanel" instance=ExtResource("1_dji8l")]
+[node name="Net" parent="HBoxContainer/NetPanel" node_paths=PackedStringArray("battlefield") instance=ExtResource("1_dji8l")]
+unique_name_in_owner = true
+battlefield = NodePath("../../..")
 
-[node name="TablePanel" type="PanelContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(400, 500)
-layout_mode = 2
+[node name="Avatar" parent="HBoxContainer/NetPanel/Net" node_paths=PackedStringArray("battlefield") instance=ExtResource("5_030w6")]
+unique_name_in_owner = true
+battlefield = NodePath("../../../..")
 
-[node name="Table" parent="HBoxContainer/TablePanel" instance=ExtResource("2_jly4q")]
+[node name="Tables" type="Control" parent="HBoxContainer/NetPanel"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4

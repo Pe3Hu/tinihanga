@@ -7,9 +7,11 @@
 script = ExtResource("1_qapgs")
 
 [node name="Slot" parent="." instance=ExtResource("2_csxlg")]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 offset_left = -24.0
 offset_top = -24.0
 offset_right = 24.0
 offset_bottom = 24.0
-type = 7
+type = 2
+pack = 7

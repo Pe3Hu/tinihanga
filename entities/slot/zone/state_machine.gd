@@ -10,13 +10,11 @@ signal transitioned
 	set(value_):
 		current_state = value_
 		
+		if current_state == State.Machine.DRAG:
+			pass
+		
 		if zone as Card:
 			zone.state_label.text = Catalog.machine_to_string[current_state]
-		#if zone as Pile:
-			#if current_state == State.Machine.DRAG:
-				#zone.hide_while_drag()
-			#else:
-				#zone.show_after_releas()
 
 
 func _ready() -> void:
@@ -46,12 +44,10 @@ func _enter() -> void:
 func drop_update() -> void:
 	if zone as Pile:
 		if zone.status != State.Status.PACKED: return
+		update_current_slot()
 	if zone as Card:
 		if zone.status != State.Status.WAITING: return
-	if zone as Card:
 		update_current_pile()
-	if zone as Pile:
-		update_current_slot()
 	
 func update_current_pile() -> void:
 	if zone.current_pile.state_machine.current_state != State.Machine.IDLE: return
@@ -64,7 +60,13 @@ func update_current_pile() -> void:
 		zone.current_pile.card_reposition(zone)
 	else:
 		var new_pile: Pile = pile_areas[0].get_parent()
-		new_pile.set_new_card(zone)
+		
+		History.undo_redo.create_action("Card to Pile")
+		History.undo_redo.add_do_method(new_pile.set_new_card.bind(zone))
+		#History.undo_redo.add_do_reference(zone)
+		History.undo_redo.add_undo_method(zone.previous_pile.set_new_card.bind(zone))
+		History.undo_redo.commit_action()
+		#new_pile.set_new_card(zone)
 	
 func update_current_slot() -> void:
 	var slot_areas = zone.drop_point_detector.get_overlapping_areas()
@@ -76,7 +78,13 @@ func update_current_slot() -> void:
 		zone.current_slot.pile_reposition(zone)
 	else:
 		var new_slot: Slot = slot_areas[0].get_parent()
-		new_slot.set_new_pile(zone)
+		
+		History.undo_redo.create_action("Pile to Slot")
+		History.undo_redo.add_do_method(new_slot.set_new_pile.bind(zone))
+		#History.undo_redo.add_do_reference(zone)
+		History.undo_redo.add_undo_method(zone.previous_slot.set_new_pile.bind(zone))
+		History.undo_redo.commit_action()
+		#new_slot.set_new_pile(zone)
 	
 func on_input(event_: InputEvent) -> void:
 	if zone as Pile:
@@ -128,9 +136,9 @@ func on_mouse_exited() -> void:
 			transitioned.emit(State.Machine.IDLE)
 	
 func on_child_transition(new_state_: State.Machine) -> void:
-	if zone as Pile:
-		if zone.status != State.Status.PACKED: return
-	if zone as Card:
-		if zone.status != State.Status.WAITING: return
+	#if zone as Pile:
+		#if zone.status != State.Status.PACKED: return
+	#if zone as Card:
+		#if zone.status != State.Status.WAITING: return
 	call_deferred("_enter")
 	current_state = new_state_

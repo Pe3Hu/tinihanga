@@ -28,6 +28,8 @@ extends TextureRect
 				element = State.Element.FIRE
 			State.Token.POWER:
 				update_texture()
+			State.Token.TRIBUTE:
+				update_texture()
 @export var element: State.Element:
 	set(value_):
 		element = value_
@@ -67,6 +69,8 @@ func update_texture() -> void:
 		State.Token.HEALTH:
 			path += "{type}.png".format({"type": Catalog.token_to_string[type]})
 		State.Token.POWER:
+			path += "{type}.png".format({"type": Catalog.token_to_string[type]})
+		State.Token.TRIBUTE:
 			path += "{type}.png".format({"type": Catalog.token_to_string[type]})
 	
 	texture = load(path)

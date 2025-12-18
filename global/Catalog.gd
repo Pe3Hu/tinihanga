@@ -8,10 +8,11 @@ const faction_to_layer = {
 	State.Faction.BLUE: 4
 }
 
-const faction_to_color = {
-	State.Faction.GREEN: Color.GREEN,#Color.DARK_GREEN,
-	State.Faction.RED: Color.RED,#Color.DARK_RED,
-	State.Faction.BLUE: Color.BLUE,#Color.DARK_BLUE
+var faction_to_color = {
+	State.Faction.NONE: Color("525252"),
+	State.Faction.GREEN: Color.from_hsv(0.333, 0.33, 0.66, 1.0),
+	State.Faction.RED: Color.from_hsv(0.0, 0.33, 0.66, 1.0),
+	State.Faction.BLUE: Color.from_hsv(0.666, 0.33, 0.66, 1.0)
 }
 
 const FACTIONS = [
@@ -32,6 +33,7 @@ const machine_to_string = {
 const token_to_string = {
 	State.Token.POWER: "power",
 	State.Token.HEALTH: "health",
+	State.Token.TRIBUTE: "tribute",
 }
 
 #region element
@@ -76,19 +78,34 @@ const element_to_component = {
 
 const NET_TOTAL_AXIS: int = 3
 const NET_TOTAL_RING: int = 3
-const NET_AXIS_OFFSET: int = 80
-const NEX_PANEL_SIZE: Vector2 = Vector2(500, 500)
+const NET_AXIS_OFFSET: int = 72
+const NET_RING_OFFSET: int = 72
+const NET_PANEL_SIZE: Vector2 = Vector2(500, 500)
+const NET_TABLE_SCALE: float = 1.85
 
 const CARD_MAX_SIZE: Vector2 = Vector2(48, 48)#Vector2(64, 64)
 const PILE_MAX_SIZE: Vector2 = Vector2(303, 99)#Vector2(404, 132)
 
 const pile_to_card_limit = {
 	State.Pile.HAND: 6,
-	State.Pile.ACTIVE: 3,
+	State.Pile.FIELD: 3,
+	State.Pile.DECK: 55,
 }
-
 
 const pile_to_size = {
 	State.Pile.HAND: Vector2(320, 48),
-	State.Pile.ACTIVE: Vector2(150, 100),
+	State.Pile.FIELD: Vector2(150, 100),
+}
+
+const slot_to_string = {
+	State.Slot.HAND: "hand",
+	State.Slot.FIELD: "field",
+	State.Slot.RESERVE: "reserve",
+	State.Slot.CHOICE: "choise",
+	State.Slot.FANG: "fang",
+	State.Slot.CLAW: "claw",
+	State.Slot.TAIL: "tail",
+	State.Slot.HEART: "heart",
+	State.Slot.LUNG: "lung",
+	State.Slot.STOMACH: "stomach",
 }

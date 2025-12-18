@@ -5,15 +5,19 @@ extends MarginContainer
 @onready var pile_drop_area_top: Area2D = %PileDropAreaTop
 @onready var pile_drop_area_down: Area2D = %PileDropAreaDown
 @onready var piles_holder: VBoxContainer = %PilesHolder
+@onready var name_label: Label = %NameLabel
+@onready var color_rect: ColorRect = %ColorRect
 
 @export var type: State.Slot
+@export var pack: State.Pack
 @export var is_loner: bool = true
+@export var faction: State.Faction
 
 
 func _ready() -> void:
 	recreate_collision_shapes()
 	resize_collision_shapes()
-	%NameLabel.text = name
+	name_label.text = Catalog.slot_to_string[type]
 	
 	for child in piles_holder.get_children():
 		var pile := child as Pile
@@ -41,11 +45,11 @@ func return_pile_starting_position(pile_: Pile) -> void:
 	piles_holder.move_child(pile_, pile_.index)
 	
 func set_new_pile(pile_: Pile) -> void:
-	if is_loner and piles_holder.get_child_count() == 1:
+	if is_loner and piles_holder.get_child_count() == 1 or pile_.resource.faction != faction:
 		pile_.current_slot.return_pile_starting_position(pile_)
 		return
 	
-	if type != State.Slot.ANY:
+	if pack != State.Pack.ANY:
 		pile_.status = State.Status.PINNED
 	
 	pile_reposition(pile_)
@@ -76,3 +80,10 @@ func pile_reposition(pile_: Pile) -> void:
 	piles_holder.remove_child(pile_)
 	piles_holder.add_child(pile_)
 	piles_holder.move_child(pile_, index)
+	
+func recolor(recolor_layer_: State.Recolor = State.Recolor.DEFAULT) -> void:
+	match recolor_layer_:
+		State.Recolor.DEFAULT:
+			color_rect.color = Color("525252")
+		State.Recolor.FACTION:
+			color_rect.color = Catalog.faction_to_color[faction]

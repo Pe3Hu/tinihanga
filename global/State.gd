@@ -21,7 +21,8 @@ enum Token{
 	NONE = 0,
 	ELEMENT = 1,
 	HEALTH = 2,
-	POWER = 3
+	POWER = 3,
+	TRIBUTE = 4,
 }
 
 #region element
@@ -50,12 +51,15 @@ enum Element{
 #endregion
 
 enum Pile{
-	NONE = 0,
-	ACTIVE = 1,
-	HAND = 2,
+	HAND = 0,
+	FIELD = 1,
+	RESERVE = 2,
+	CHOICE = 3,
+	PREFERENCE = 4,
+	DECK = 5
 }
 
-enum Slot{
+enum Pack{
 	ANY = 0,
 	I = 1,
 	II = 2,
@@ -66,9 +70,34 @@ enum Slot{
 	VII = 7,
 }
 
+enum Slot{
+	HAND = 0,
+	FIELD = 1,
+	RESERVE = 2,
+	CHOICE = 3,
+	FANG = 10,
+	CLAW = 11,
+	TAIL = 12,
+	HEART = 13,
+	LUNG = 14,
+	STOMACH = 15,
+}
+
 enum Status{
 	WAITING = 0,
 	PACKED = 1,
 	TIED = 2,
 	PINNED = 3,
+}
+
+enum Order{
+	FIRST = 1,
+	SECOND = 2,
+	THIRD = 3
+}
+
+enum Recolor{
+	DEFAULT = 0,
+	FACTION = 1,
+	ACCESS = 2
 }
