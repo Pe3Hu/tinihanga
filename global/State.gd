@@ -101,3 +101,8 @@ enum Recolor{
 	FACTION = 1,
 	ACCESS = 2
 }
+
+enum Ditch{
+	GORGE = 0,
+	RIVER = 1
+}

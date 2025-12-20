@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d01y4h66bgjtx"]
+
+[ext_resource type="Script" uid="uid://pgrnfnf6llt" path="res://entities/island/habitat/habitat.gd" id="1_m1tk6"]
+
+[node name="Habitat" type="Polygon2D"]
+script = ExtResource("1_m1tk6")

@@ -12,14 +12,16 @@ var resource: BattlefieldResource = BattlefieldResource.new()
 
 
 func _ready() -> void:
-	net.resource = resource.net
-	avatar.resource = resource.avatar
-	net.init_knots()
-	init_tables()
-	start_round()
 	
-	for knot in net.knots.get_children():
-		knot.slot.recolor(State.Recolor.FACTION)
+	#net.resource = resource.net
+	#avatar.resource = resource.avatar
+	#net.init_knots()
+	#init_tables()
+	#start_round()
+	#
+	#for knot in net.knots.get_children():
+		#knot.slot.recolor(State.Recolor.FACTION)
+	pass
 	
 func init_tables() -> void:
 	for player_resource in resource.referee.players:
@@ -42,4 +44,4 @@ func start_round() -> void:
 		table.pack_field_pile_from_adviser()
 		var new_slot = net.type_to_faction_to_slot[State.Slot.FANG][table.field_pile.resource.faction][table.field_pile.resource.faction]
 		new_slot.set_new_pile(table.field_pile)
-			
+	

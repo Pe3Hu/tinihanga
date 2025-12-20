@@ -109,3 +109,32 @@ const slot_to_string = {
 	State.Slot.LUNG: "lung",
 	State.Slot.STOMACH: "stomach",
 }
+
+
+const ISLAND_RING_LIMIT: int = 3
+const HABITAT_L: int = 100
+
+var HEXAGON_VERTEXS = [
+]
+
+const CUBE_DIRCTIONS = [
+		Vector3i(0, -1, +1),
+		Vector3i(+1, -1, 0),
+		Vector3i(+1, 0, -1),
+		Vector3i(0, +1, -1), 
+		Vector3i(-1, +1, 0),
+		Vector3i(-1, 0, +1),   
+	]
+
+
+func _init() -> void:
+	init_hexagon_vertexs()
+	
+func init_hexagon_vertexs() -> void:
+	var n = 6
+	for _i in n:
+		var angle = 2*PI*_i/n-PI/2+PI/n
+		var vertex = Vector2(1,0).rotated(angle)
+		HEXAGON_VERTEXS.append(vertex)
+
+	

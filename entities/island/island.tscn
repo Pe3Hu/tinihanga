@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1qk3q2wjecc4"]
+
+[ext_resource type="Script" uid="uid://dgul6muv15xoo" path="res://entities/island/island.gd" id="1_wgokh"]
+[ext_resource type="PackedScene" uid="uid://d01y4h66bgjtx" path="res://entities/island/habitat/habitat.tscn" id="2_bssl7"]
+[ext_resource type="PackedScene" uid="uid://btw1d5riuyg8e" path="res://entities/island/pit/pit.tscn" id="3_u8jnd"]
+[ext_resource type="PackedScene" uid="uid://d2won2gc24lj3" path="res://entities/island/ditch/ditch.tscn" id="4_edu5b"]
+
+[node name="Island" type="Node2D"]
+script = ExtResource("1_wgokh")
+habitat_scene = ExtResource("2_bssl7")
+pit_scene = ExtResource("3_u8jnd")
+ditch_scene = ExtResource("4_edu5b")
+
+[node name="Habitats" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Ditchs" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Pits" type="Node2D" parent="."]
+unique_name_in_owner = true

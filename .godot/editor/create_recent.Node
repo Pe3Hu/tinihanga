@@ -1,9 +1,11 @@
+Line2D
+Sprite2D
+Node2D
+PanelContainer
+Polygon2D
 Control
 ColorRect
 Button
-PanelContainer
 HBoxContainer
 TextureRect
-Sprite2D
-Node2D
 Node

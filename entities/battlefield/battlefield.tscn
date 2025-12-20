@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8y022a6as6j8"]
+[gd_scene load_steps=7 format=3 uid="uid://c8y022a6as6j8"]
 
 [ext_resource type="PackedScene" uid="uid://bgtvfrdv16tkk" path="res://entities/net/net.tscn" id="1_dji8l"]
 [ext_resource type="Script" uid="uid://b5bjpvu7bglpa" path="res://entities/battlefield/battlefield.gd" id="1_jly4q"]
 [ext_resource type="PackedScene" uid="uid://c0vjwm01bb3w8" path="res://entities/table/table.tscn" id="2_jly4q"]
 [ext_resource type="PackedScene" uid="uid://t3x2byhxs5c3" path="res://entities/battlefield/avatar/avatar.tscn" id="5_030w6"]
+[ext_resource type="PackedScene" uid="uid://b1qk3q2wjecc4" path="res://entities/island/island.tscn" id="5_ssfyx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dji8l"]
 
@@ -27,6 +28,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="NetPanel" type="PanelContainer" parent="HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(900, 900)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dji8l")
@@ -44,3 +46,10 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="IslandPanel" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(900, 900)
+layout_mode = 2
+
+[node name="Island" parent="HBoxContainer/IslandPanel" instance=ExtResource("5_ssfyx")]
+unique_name_in_owner = true

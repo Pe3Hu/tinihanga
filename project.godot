@@ -29,7 +29,8 @@ window/size/viewport_height=1080
 [file_customization]
 
 folder_colors={
-"res://entities/battlefield/": "green",
+"res://entities/battlefield/": "blue",
+"res://entities/island/": "green",
 "res://entities/net/": "yellow",
 "res://entities/referee/": "red",
 "res://entities/slot/": "purple",
